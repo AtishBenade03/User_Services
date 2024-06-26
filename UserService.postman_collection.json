@@ -1,0 +1,232 @@
+{
+	"info": {
+		"_postman_id": "8003fe34-d952-4349-acc5-06ab68a5b38a",
+		"name": "UserService",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "34921532"
+	},
+	"item": [
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"var jsonData = pm.response.json();\r",
+									"console.log(jsonData);\r",
+									"pm.test(\"Token is present\", function () {\r",
+									"    pm.expect(jsonData).to.have.property(\"jwtToken\");\r",
+									"});\r",
+									"\r",
+									"pm.environment.set(\"JWT_TOKEN\", jsonData.jwtToken);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"user\": \"9538330068\",\r\n\"password\": \"atish\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{DOMAIN}}:8080/login",
+							"protocol": "http",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"port": "8080",
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Users-Management",
+			"item": [
+				{
+					"name": "Update_Users",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjpbeyJhdXRob3JpdHkiOiJhZG1pbiJ9XSwic3ViIjoiYXRpc2hAZ21haWwuY29tIiwiaWF0IjoxNzE5Mzk4ODY5LCJleHAiOjE3MjAwMDM2Njl9.iUcCpIXpG2cTUEVRiwuw4CNC8oJwM788MoJJBNUyC4cnKTCi0N3iFlHNnQv8x64EX2BrqG5x_pj8v0-Lxnutxw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\r\n  \"firstname\": \"atish\",\r\n  \"lastname\": \"Smith\",\r\n  \"mobile\": 9538330068,\r\n  \"email\": \"atisha@gmail.com\",\r\n  \"password\": \"atish\",\r\n  \"dateOfBirth\": \"1985-05-15\",\r\n  \"role\": \"admin\",\r\n  \"address\": {\r\n     \"id\":\"1\",\r\n    \"country\": \"United States\",\r\n    \"state\": \"California\",\r\n    \"city\": \"San Francisco\",\r\n    \"street\": \"123 Elm St\"\r\n    \r\n  }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{DOMAIN}}:8080/users/1",
+							"protocol": "http",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"port": "8080",
+							"path": [
+								"users",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get_AllUsers",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{DOMAIN}}:8080/users",
+							"protocol": "http",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"port": "8080",
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create_User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\r\n  \"firstname\": \"atish\",\r\n  \"lastname\": \"Smith\",\r\n  \"mobile\": 9538330068,\r\n  \"email\": \"atish@gmail.com\",\r\n  \"password\": \"atish\",\r\n  \"dateOfBirth\": \"1985-05-15\",\r\n  \"role\": \"admin\",\r\n  \"address\": {\r\n\r\n    \"country\": \"United States\",\r\n    \"state\": \"California\",\r\n    \"city\": \"San Francisco\",\r\n    \"street\": \"123 Elm St\"\r\n    \r\n  }\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{DOMAIN}}:8080/users/register",
+							"protocol": "http",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"port": "8080",
+							"path": [
+								"users",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete_User",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://{{DOMAIN}}:8080/users/1",
+							"protocol": "http",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"port": "8080",
+							"path": [
+								"users",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "DOMAIN\n",
+			"value": "localhost",
+			"type": "string"
+		},
+		{
+			"key": "JWT_TOKEN",
+			"value": "",
+			"type": "string"
+		}
+	]
+}
